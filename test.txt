@@ -1,0 +1,264 @@
+Chapter 2
+
+Rotate image
+
+image=imread('peppers.png');
+img=imrotate(image,90);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img),title('Rotate image');
+==================================
+convert image to Black&white
+
+image=imread('tire.tif');
+img=im2bw(image);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img),title('B&W image');
+========================================================
+convert color image to Gray
+
+image=imread('peppers.png');
+img=rgb2gray(image);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img),title('Gray image');
+
+=========================================================
+convert color image to indexed
+
+image=imread('peppers.png');
+[img,map]=rgb2ind(image,128);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img,map),title('indexed image');
+
+=========================================================
+convert gray image to indexed
+
+image=imread('eight.tif');
+[img,map]=gray2ind(image);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img,map),title('indexed image');
+
+
+=========================================================
+
+Image Noise
+
+image=imread('peppers.png');
+img=imnoise(image,'salt & pepper',0.2);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img),title('Image Noise');
+
+===========================================================
+Chapter 3
+**********
+
+Perform Average Filter
+
+1-
+image=imread('eight.tif');
+filter= fspecial('average',[5,5]);
+img=filter2(filter,image);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img/255),title('Average Filter');
+
+2-
+
+image=imread('eight.tif');
+filter= fspecial('average',[5,5]);
+img=imfilter(image,filter);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img),title('Average Filter');
+
+===============================================================
+Perform Gaussian Filter
+
+1-
+image=imread('eight.tif');
+filter= fspecial('gaussian',[5,5],1);
+img=filter2(filter,image);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img/255),title('Gaussian Filter');
+
+2-
+
+image=imread('eight.tif');
+filter= fspecial('gaussian',[5,5],1);
+img=imfilter(image,filter);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img),title('Gaussian Filter');
+
+================================================================
+
+(medfilt2): داله بستخدمها مع الصور الرماديه فقط
+علشان استخدمها مع صوره ملونه لازم احولها لصوره رماديه 
+
+Perform Median Filter
+
+image=imread('tire.tif');
+img=medfilt2(image,[5,5]);
+subplot(1,2,1),imshow(image),title('orginal image');
+subplot(1,2,2),imshow(img),title('Median Filter');
+
+صوره ملونه
+
+image=imread('peppers.png');
+cimg=rgb2gray(image);
+img=medfilt2(cimg,[5,5]);
+subplot(2,2,1),imshow(image),title('orginal image');
+subplot(2,2,2),imshow(cimg),title('Gray Image');
+subplot(2,2,3),imshow(img),title('Median Filter');
+
+
+==================================================================
+
+Intensity Transformation Function 
+
+1-Negative Image
+*****************
+
+image=imread('tire.tif');
+img=imcomplement(image);
+subplot(1,2,1),imshow(image),title('Orginal Image');
+subplot(1,2,2),imshow(img),title('Negative Image')
+
+
+2- Arthmitic Operation
+************************
+
+(imadd)
+(imsubtract)
+(immultiply) 
+(imdivide)
+
+
+image=imread('tire.tif');
+img=imadd(image,50);
+img1=imsubtract(image,50);
+img2=immultiply(image,20);
+img3=imdivide(image,20);
+subplot(3,3,1),imshow(image),title('Orginal Image');
+subplot(3,3,2),imshow(img),title('Add Image')
+subplot(3,3,3),imshow(img1),title('Subtract Image');
+subplot(3,3,4),imshow(img2),title('Multiply Image');
+subplot(3,3,5),imshow(img3),title('Divide Image');
+
+
+3-Gamma Correction
+**********************
+
+image=imread('eight.tif');
+img=imadjust(image,[ ],[ ],0.5);
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('Gamma');
+
+
+4-contrast function
+f(x)=1/(1+(0.5/x))^E
+*********************
+
+image=imread('eight.tif');
+g=1./(1+(0.5./(double(image)+eps)).^2);
+img=mat2gray(g);
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('Contrast Image');
+
+5-Logrthmtic Transformation
+f(x)=C*log(1+f)
+*************************
+
+image=imread('eight.tif');
+g=2*log(1+double(image));
+img=mat2gray(g);
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('Log Image');
+
+====================================================================
+
+Histogram
+***********
+
+image=imread('pout.tif');
+e=histeq(image);
+subplot(2,2,1),imshow(image),title('Orginal');
+subplot(2,2,2),imhist(image),title('Orginal Image');
+subplot(2,2,3),imshow(e),title('Hist Image');
+subplot(2,2,4),imhist(e),title('Hist Image');
+
+=====================================================================
+
+Chapter4 (Segmentation)
+*************************
+[edge Detection]
+
+1-Sobel
+
+image=imread('cameraman.tif');
+img=edge(image,'sobel');
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('Sobel');
+*****************************************
+
+2-Prewite
+
+
+image=imread('cameraman.tif');
+img=edge(image,'prewitt');
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('prewitt');
+**************************************************
+
+
+3-canny
+
+image=imread('cameraman.tif');
+img=edge(image,'canny');
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('canny');
+*************************************************
+
+4- Laplacian of Gaussian
+
+image=imread('cameraman.tif');
+img=edge(image,'log');
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('Laplacian ');
+
+***************************************************************************
+
+image=imread('cameraman.tif');
+img1=edge(image,'sobel');
+img2=edge(image,'prewitt');
+img3=edge(image,'canny');
+img4=edge(image,'log');
+subplot(3,2,1),imshow(image),title('Orginal');
+subplot(3,2,2),imshow(img1),title('Sobel');
+subplot(3,2,3),imshow(img2),title('prewitt');
+subplot(3,2,4),imshow(img3),title('canny');
+subplot(3,2,5),imshow(img4),title('Laplacian');
+
+
+
+
+Threshold
+************
+image=imread('cameraman.tif');
+img=image>100;
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('Threshold');
+
+
+
+Edge Detection With Threshold (Double Threshold)
+******************************
+(القيم اللى بين القيمتين بيعتبرها بيكسل والباقى بيعتبره باك جراوند)
+
+image=imread('cameraman.tif');
+img=image>115 & image<125
+subplot(1,2,1),imshow(image),title('Orginal');
+subplot(1,2,2),imshow(img),title('Edge Detection');
+
+
+
+
+***********************************************
+
+
